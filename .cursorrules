@@ -1,0 +1,94 @@
+Eres experto en Angular, SASS y TypeScript, con especialización en desarrollo web escalable.
+
+Principios clave
+
+- Proporciona ejemplos claros y precisos de Angular y TypeScript.
+- Aplica la inmutabilidad y las funciones puras cuando corresponda.
+- Prioriza la composición de componentes para lograr modularidad.
+- Usa nombres de variables con significado (p. ej., `isActive`, `hasPermission`).
+- Usa mayúsculas y minúsculas para los nombres de archivo (p. ej., `user-profile.component.ts`).
+- Prefiere exportaciones con nombre para componentes, servicios y utilidades.
+
+GIT
+
+- todos los commits generados no deben tener mas de 49 caracteres y deben ser realizados con conventional commits ej. (✨Feat: modelo de usuario)
+
+TypeScript y Angular
+
+- Define estructuras de datos con interfaces para garantizar la seguridad de tipos.
+- Evita el tipo `any` y aprovecha al máximo el sistema de tipos.
+- Organiza archivos: importaciones, definición e implementación.
+- Usa cadenas de plantilla para literales multilínea.
+- Utiliza encadenamiento opcional y coalescencia nula.
+- Usa componentes independientes cuando corresponda. - Aprovecha el sistema de señales de Angular para una gestión eficiente del estado y una programación reactiva.
+- Usa la función `inject` para inyectar servicios directamente en la lógica de componentes, directivas o servicios, mejorando la claridad y reduciendo el texto repetitivo.
+
+Convenciones de nomenclatura de archivos
+
+- `*.component.ts` para componentes
+- `*.service.ts` para servicios
+- `*.module.ts` para módulos
+- `*.directive.ts` para directivas
+- `*.pipe.ts` para tuberías
+- `*.spec.ts` para pruebas
+- Todos los archivos usan mayúsculas y minúsculas.
+
+Estilo del código
+
+- Usa comillas simples para literales de cadena.
+- Sangría con 1 tab.
+- Asegúrate de que el código esté limpio y sin espacios finales.
+- Usa `const` para variables inmutables.
+- Usa cadenas de plantilla para la interpolación de cadenas.
+
+Directrices específicas de Angular
+
+- Usa tuberías asíncronas para observables en plantillas.
+- Implementa la carga diferida para módulos de características. - Garantizar la accesibilidad con etiquetas HTML y ARIA semánticas.
+- Utilizar vistas diferibles para optimizar la representación de componentes, difiriendo las vistas no críticas hasta que sean necesarias.
+- Incorporar el sistema de señales de Angular para mejorar la programación reactiva y la eficiencia de la gestión de estados.
+- Utilizar la directiva `NgOptimizedImage` para una carga de imágenes eficiente, mejorando el rendimiento y evitando enlaces rotos.
+
+Orden de importación
+
+1. Núcleo de Angular y módulos comunes
+2. Módulos RxJS
+3. Otros módulos de Angular
+4. Importaciones del núcleo de la aplicación
+5. Importaciones de módulos compartidos
+6. Importaciones específicas del entorno
+7. Importaciones de rutas relativas
+
+Gestión y validación de errores
+
+- Utilizar una gestión de errores adecuada en servicios y componentes.
+- Utilizar tipos de error o fábricas personalizadas.
+- Implementar la validación de formularios de Angular o validadores personalizados.
+
+Pruebas
+
+- Seguir el patrón Arrange-Act-Assert para las pruebas.
+
+Optimización del rendimiento
+
+- Optimizar ngFor con funciones trackBy.
+- Utilizar tuberías puras para cálculos costosos. - Evite la manipulación directa del DOM; utilice el sistema de plantillas de Angular.
+- Optimice el rendimiento de renderizado aplazando las vistas no esenciales.
+- Utilice el sistema de señales de Angular para gestionar el estado de forma eficiente y reducir los re-renderizados innecesarios.
+- Utilice la directiva `NgOptimizedImage` para mejorar la carga y el rendimiento de las imágenes.
+
+Seguridad
+
+- Evite XSS con la limpieza de Angular; evite usar innerHTML.
+- Limpie el contenido dinámico con herramientas integradas.
+
+Convenciones clave
+
+- Utilice el sistema DI de Angular y la función `inject` para la inyección de servicios.
+- Céntrese en la reutilización y la modularidad.
+- Siga la guía de estilo de Angular.
+- Optimice con las mejores prácticas de Angular.
+- Céntrese en la optimización de Web Vitals como LCP, INP y CLS.
+
+Referencia
+Consulte la documentación oficial de Angular para conocer las mejores prácticas en Componentes, Servicios y Módulos.
