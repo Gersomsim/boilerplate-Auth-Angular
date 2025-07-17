@@ -1,4 +1,5 @@
 import { HttpErrorResponse, HttpInterceptorFn, HttpRequest, HttpResponse } from '@angular/common/http'
+import { inject } from '@angular/core'
 import { catchError, tap, throwError } from 'rxjs'
 import { Notification } from '../libraries/notification.library'
 
@@ -17,37 +18,39 @@ export const launchNotificationInterceptor: HttpInterceptorFn = (req, next) => {
 }
 
 const handleSuccessResponse = (response: HttpResponse<any>, request: HttpRequest<any>): void => {
+	const notification = inject(Notification)
 	const method = request.method
 	const url = request.url
 
 	// Puedes personalizar los mensajes según el método HTTP
 	switch (method) {
 		case 'POST':
-			Notification.showSuccess('Elemento creado exitosamente', 'Creación exitosa')
+			notification.showSuccess('Elemento creado exitosamente', 'Creación exitosa')
 			break
 		case 'PUT':
 		case 'PATCH':
-			Notification.showSuccess('Elemento actualizado exitosamente', 'Actualización exitosa')
+			notification.showSuccess('Elemento actualizado exitosamente', 'Actualización exitosa')
 			break
 		case 'DELETE':
-			Notification.showSuccess('Elemento eliminado exitosamente', 'Eliminación exitosa')
+			notification.showSuccess('Elemento eliminado exitosamente', 'Eliminación exitosa')
 			break
 		case 'GET':
 			// Opcional: puedes mostrar notificaciones para GET o no
 			// Notification.showInfo('Datos cargados exitosamente', 'Carga exitosa');
 			break
 		default:
-			Notification.showSuccess('Operación completada exitosamente')
+			notification.showSuccess('Operación completada exitosamente')
 	}
 
 	// También puedes verificar el contenido de la respuesta
 	if (response.body && response.body.message) {
-		Notification.showSuccess(response.body.message)
+		notification.showSuccess(response.body.message)
 	}
 }
 const handleErrorResponse = (error: HttpErrorResponse, request: HttpRequest<any>): void => {
 	let errorMessage = 'Ha ocurrido un error'
 	let errorTitle = 'Error'
+	const notification = inject(Notification)
 
 	// Manejo de errores según código de estado
 	switch (error.status) {
@@ -80,5 +83,5 @@ const handleErrorResponse = (error: HttpErrorResponse, request: HttpRequest<any>
 		errorMessage = error.error.message
 	}
 
-	Notification.showError(errorMessage, errorTitle)
+	notification.showError(errorMessage, errorTitle)
 }

@@ -1,26 +1,37 @@
+import { inject, Injectable } from '@angular/core'
+import { ToastrService } from 'ngx-toastr'
+
+@Injectable({
+	providedIn: 'root',
+})
 export class Notification {
-	static showSuccess(message: string, title?: string): void {
-		// Implementa aquí tu lógica de notificación exitosa
-		// Ejemplo con alert (reemplaza con tu librería de notificaciones)
-		console.log('✅ SUCCESS:', title || 'Éxito', message)
-		// Ejemplo: this.toastr.success(message, title);
+	toast = inject(ToastrService)
+
+	showSuccess(message: string, title = ''): void {
+		this.toast.success(message, title, {
+			timeOut: 5000,
+			progressBar: true,
+		})
 	}
 
-	static showError(message: string, title?: string): void {
-		// Implementa aquí tu lógica de notificación de error
-		console.log('❌ ERROR:', title || 'Error', message)
-		// Ejemplo: this.toastr.error(message, title);
+	showError(message: string, title = ''): void {
+		this.toast.error(message, title, {
+			timeOut: 4000,
+			progressBar: true,
+		})
 	}
 
-	static showWarning(message: string, title?: string): void {
-		// Implementa aquí tu lógica de notificación de advertencia
-		console.log('⚠️ WARNING:', title || 'Advertencia', message)
-		// Ejemplo: this.toastr.warning(message, title);
+	showWarning(message: string, title = ''): void {
+		this.toast.warning(message, title, {
+			timeOut: 5000,
+			progressBar: true,
+		})
 	}
 
-	static showInfo(message: string, title?: string): void {
-		// Implementa aquí tu lógica de notificación informativa
-		console.log('ℹ️ INFO:', title || 'Información', message)
-		// Ejemplo: this.toastr.info(message, title);
+	showInfo(message: string, title = ''): void {
+		this.toast.info(message, title, {
+			timeOut: 5000,
+			progressBar: true,
+		})
 	}
 }
