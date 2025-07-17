@@ -9,5 +9,18 @@ export default {
 		'^@shared/(.*)$': '<rootDir>/src/app/shared/$1',
 	},
 	coverageDirectory: './coverage',
-	collectCoverageFrom: ['src/app/**/*.ts', '!<rootDir/node_modules/', '!<rootDir>/tests/'],
+	collectCoverageFrom: [
+		'src/app/**/*.ts',
+		'!<rootDir>/node_modules/',
+		'!<rootDir>/tests/',
+		'!**/index.ts', // Excluye archivos de barril
+		'!**/*.spec.ts', // Excluye archivos de test
+		'!**/*.test.ts', // Excluye archivos de test
+		'!**/app.config.ts', // Excluye archivos de configuración
+		'!**/app.routes.ts', // Excluye archivos de rutas
+		'!**/main.ts', // Excluye punto de entrada
+	],
+	testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/dist/'],
+	moduleFileExtensions: ['ts', 'js', 'json'],
+	testEnvironment: 'jsdom',
 } satisfies Config
