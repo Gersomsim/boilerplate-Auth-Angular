@@ -1,5 +1,5 @@
 {
-	"name": "flex-erp",
+	"name": "boilerplate-auth",
 	"version": "0.0.0",
 	"scripts": {
 		"ng": "ng",

@@ -3,7 +3,7 @@
 	"version": 1,
 	"newProjectRoot": "projects",
 	"projects": {
-		"FlexERP": {
+		"Boilerplate Auth": {
 			"projectType": "application",
 			"schematics": {
 				"@schematics/angular:component": {
@@ -57,10 +57,10 @@
 					"builder": "@angular/build:dev-server",
 					"configurations": {
 						"production": {
-							"buildTarget": "FlexERP:build:production"
+							"buildTarget": "Boilerplate Auth:build:production"
 						},
 						"development": {
-							"buildTarget": "FlexERP:build:development"
+							"buildTarget": "Boilerplate Auth:build:development"
 						}
 					},
 					"defaultConfiguration": "development"
