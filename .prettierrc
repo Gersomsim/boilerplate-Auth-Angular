@@ -1,25 +1,52 @@
 {
-  "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit",
-    "source.organizeImports": "explicit"
-  },
-  "prettier.requireConfig": true,
-  "prettier.useEditorConfig": false,
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[html]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[scss]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[markdown]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+	"$schema": "https://json.schemastore.org/prettierrc",
+	"semi": false,
+	"singleQuote": true,
+	"useTabs": true,
+	"tabWidth": 4,
+	"printWidth": 120,
+	"trailingComma": "all",
+	"bracketSpacing": true,
+	"bracketSameLine": false,
+	"arrowParens": "avoid",
+	"endOfLine": "lf",
+	"quoteProps": "as-needed",
+	"jsxSingleQuote": true,
+	"htmlWhitespaceSensitivity": "css",
+	"vueIndentScriptAndStyle": false,
+	"embeddedLanguageFormatting": "auto",
+	"singleAttributePerLine": false,
+	"overrides": [
+		{
+			"files": "*.html",
+			"options": {
+				"parser": "angular",
+				"htmlWhitespaceSensitivity": "ignore",
+				"bracketSameLine": false,
+				"singleAttributePerLine": true
+			}
+		},
+		{
+			"files": ["*.scss", "*.css"],
+			"options": {
+				"singleQuote": false,
+				"useTabs": true
+			}
+		},
+		{
+			"files": "*.json",
+			"options": {
+				"useTabs": true,
+				"trailingComma": "none"
+			}
+		},
+		{
+			"files": "*.md",
+			"options": {
+				"useTabs": false,
+				"tabWidth": 2,
+				"proseWrap": "always"
+			}
+		}
+	]
 }
