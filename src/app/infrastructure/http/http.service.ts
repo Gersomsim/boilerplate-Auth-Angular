@@ -9,7 +9,7 @@ import { catchError, Observable } from 'rxjs'
 })
 export class HttpService extends ErrorHandler {
 	private readonly http = inject(HttpClient)
-	private readonly baseUrl = ''
+	baseUrl = ''
 	constructor() {
 		super()
 	}
