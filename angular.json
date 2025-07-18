@@ -3,7 +3,7 @@
 	"version": 1,
 	"newProjectRoot": "projects",
 	"projects": {
-		"Boilerplate Auth": {
+		"boilerplate-auth": {
 			"projectType": "application",
 			"schematics": {
 				"@schematics/angular:component": {
@@ -57,10 +57,10 @@
 					"builder": "@angular/build:dev-server",
 					"configurations": {
 						"production": {
-							"buildTarget": "Boilerplate Auth:build:production"
+							"buildTarget": "boilerplate-auth:build:production"
 						},
 						"development": {
-							"buildTarget": "Boilerplate Auth:build:development"
+							"buildTarget": "boilerplate-auth:build:development"
 						}
 					},
 					"defaultConfiguration": "development"
