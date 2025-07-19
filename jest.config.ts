@@ -7,6 +7,7 @@ export default {
 		'^@application/(.*)$': '<rootDir>/src/app/application/$1',
 		'^@domain/(.*)$': '<rootDir>/src/app/domain/$1',
 		'^@shared/(.*)$': '<rootDir>/src/app/shared/$1',
+		'^@envs/(.*)$': '<rootDir>/src/environments/$1',
 	},
 	coverageDirectory: './coverage',
 	collectCoverageFrom: [
