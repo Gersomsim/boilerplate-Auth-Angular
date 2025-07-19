@@ -18,7 +18,7 @@ export default {
 		'!**/*.spec.ts', // Excluye archivos de test
 		'!**/*.test.ts', // Excluye archivos de test
 		'!**/app.config.ts', // Excluye archivos de configuración
-		'!**/app.routes.ts', // Excluye archivos de rutas
+		'!**/*.routes.ts', // Excluye archivos de rutas
 		'!**/main.ts', // Excluye punto de entrada
 	],
 	testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/dist/'],
