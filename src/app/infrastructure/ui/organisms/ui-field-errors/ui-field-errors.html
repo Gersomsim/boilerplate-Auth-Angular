@@ -1,0 +1,16 @@
+@if (control?.touched) {
+	<p class="text-sm/6 text-red-500">
+		@if (getErrorMessage('required')) {
+			<span>{{ getErrorMessage('required') }}</span>
+		}
+		@if (getErrorMessage('email')) {
+			<span>{{ getErrorMessage('email') }}</span>
+		}
+		@if (getErrorMessage('minlength')) {
+			<span>{{ getErrorMessage('minlength') }}</span>
+		}
+		@if (getErrorMessage('maxlength')) {
+			<span>{{ getErrorMessage('maxlength') }}</span>
+		}
+	</p>
+}
