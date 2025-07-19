@@ -1,4 +1,4 @@
-import { HttpContext } from '@angular/common/http'
+import { HttpContext, HttpHeaders } from '@angular/common/http'
 import { createHttpFactory, HttpMethod, SpectatorHttp } from '@ngneat/spectator/jest'
 import { HttpService } from './http.service'
 
@@ -253,6 +253,118 @@ describe('HttpService', () => {
 			const mainUrl = `${spectator.service.baseUrl}${testUrl}`
 			const req = spectator.expectOne(mainUrl, HttpMethod.DELETE)
 			req.flush('', { status: 403, statusText: 'Forbidden' })
+		})
+	})
+
+	describe('Método POST con Headers', () => {
+		it('debería realizar una petición POST con headers personalizados', () => {
+			const headers = new HttpHeaders({
+				'Content-Type': 'application/json',
+				Authorization: 'Bearer token123',
+				'Custom-Header': 'custom-value',
+			})
+
+			spectator.service.postWithHeaders(testUrl, testData, headers).subscribe()
+			const mainUrl = `${spectator.service.baseUrl}${testUrl}`
+			const req = spectator.expectOne(mainUrl, HttpMethod.POST)
+
+			expect(req.request.body).toEqual(testData)
+			expect(req.request.headers.get('Content-Type')).toBe('application/json')
+			expect(req.request.headers.get('Authorization')).toBe('Bearer token123')
+			expect(req.request.headers.get('Custom-Header')).toBe('custom-value')
+
+			req.flush('', { status: 200, statusText: 'OK' })
+		})
+
+		it('debería realizar una petición POST con headers vacíos', () => {
+			const headers = new HttpHeaders()
+
+			spectator.service.postWithHeaders(testUrl, testData, headers).subscribe()
+			const mainUrl = `${spectator.service.baseUrl}${testUrl}`
+			const req = spectator.expectOne(mainUrl, HttpMethod.POST)
+
+			expect(req.request.body).toEqual(testData)
+			expect(req.request.headers.keys().length).toBe(0)
+
+			req.flush('', { status: 200, statusText: 'OK' })
+		})
+
+		it('debería manejar errores en petición POST con headers', () => {
+			const headers = new HttpHeaders({
+				Authorization: 'Bearer invalid-token',
+			})
+
+			spectator.service.postWithHeaders(testUrl, testData, headers).subscribe({
+				next: () => fail('Debería haber fallado'),
+				error: error => {
+					expect(error.message).toBe('Unauthorized')
+				},
+			})
+
+			const mainUrl = `${spectator.service.baseUrl}${testUrl}`
+			const req = spectator.expectOne(mainUrl, HttpMethod.POST)
+			req.flush('', { status: 401, statusText: 'Unauthorized' })
+		})
+
+		it('debería manejar respuesta exitosa en POST con headers', () => {
+			const headers = new HttpHeaders({
+				'Content-Type': 'application/json',
+				'X-API-Key': 'api-key-123',
+			})
+			const mockResponse = { id: 1, ...testData }
+
+			spectator.service.postWithHeaders(testUrl, testData, headers).subscribe({
+				next: response => {
+					expect(response).toEqual(mockResponse)
+				},
+				error: () => fail('Debería haber fallado'),
+			})
+
+			const mainUrl = `${spectator.service.baseUrl}${testUrl}`
+			const req = spectator.expectOne(mainUrl, HttpMethod.POST)
+			expect(req.request.headers.get('Content-Type')).toBe('application/json')
+			expect(req.request.headers.get('X-API-Key')).toBe('api-key-123')
+			req.flush(mockResponse, { status: 200, statusText: 'OK' })
+		})
+
+		it('debería manejar errores de red en POST con headers', () => {
+			const headers = new HttpHeaders({
+				Authorization: 'Bearer token123',
+			})
+
+			spectator.service.postWithHeaders(testUrl, testData, headers).subscribe({
+				next: () => fail('Debería haber fallado'),
+				error: error => {
+					expect(error.message).toBe('Error desconocido')
+				},
+			})
+
+			const mainUrl = `${spectator.service.baseUrl}${testUrl}`
+			const req = spectator.expectOne(mainUrl, HttpMethod.POST)
+			req.flush('', { status: 0, statusText: 'Network Error' })
+		})
+
+		it('debería manejar error 401 y limpiar sesión en POST con headers', () => {
+			const headers = new HttpHeaders({
+				Authorization: 'Bearer expired-token',
+			})
+
+			// Mock localStorage y sessionStorage
+			const localStorageSpy = jest.spyOn(Storage.prototype, 'clear')
+			const sessionStorageSpy = jest.spyOn(sessionStorage, 'clear')
+
+			spectator.service.postWithHeaders(testUrl, testData, headers).subscribe({
+				next: () => fail('Debería haber fallado'),
+				error: error => {
+					expect(error.message).toBe('Unauthorized')
+					expect(localStorageSpy).toHaveBeenCalled()
+					expect(sessionStorageSpy).toHaveBeenCalled()
+				},
+			})
+
+			const mainUrl = `${spectator.service.baseUrl}${testUrl}`
+			const req = spectator.expectOne(mainUrl, HttpMethod.POST)
+			req.flush('', { status: 401, statusText: 'Unauthorized' })
 		})
 	})
 

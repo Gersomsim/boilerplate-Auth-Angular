@@ -55,7 +55,7 @@ export class HttpService extends ErrorHandler {
 			.pipe(catchError(error => this.handleError(error)))
 	}
 
-	postWithHeaders<T>(url: string, data: any, headers: HttpHeaders): Observable<T> {
+	postWithHeaders<T>(url: string, data: unknown, headers: HttpHeaders): Observable<T> {
 		return this.http
 			.post<T>(`${this.baseUrl}${url}`, data, { headers })
 			.pipe(catchError(error => this.handleError(error)))
