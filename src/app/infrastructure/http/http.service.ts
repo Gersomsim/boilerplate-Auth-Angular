@@ -1,4 +1,4 @@
-import { HttpClient, HttpContext } from '@angular/common/http'
+import { HttpClient, HttpContext, HttpHeaders } from '@angular/common/http'
 import { inject, Injectable } from '@angular/core'
 import { Router } from '@angular/router'
 import { ErrorHandler } from '@utils/error-handler'
@@ -52,6 +52,12 @@ export class HttpService extends ErrorHandler {
 		const queryParams = generateQueryParams(filters)
 		return this.http
 			.delete<T>(`${this.baseUrl}${url}`, { params: queryParams, context })
+			.pipe(catchError(error => this.handleError(error)))
+	}
+
+	postWithHeaders<T>(url: string, data: any, headers: HttpHeaders): Observable<T> {
+		return this.http
+			.post<T>(`${this.baseUrl}${url}`, data, { headers })
 			.pipe(catchError(error => this.handleError(error)))
 	}
 }
