@@ -76,7 +76,7 @@
 			<app-ui-field-errors [control]="form.get('confirmPassword')" />
 		</div>
 		@if (form.errors?.['passwordMismatch'] && form.touched) {
-			<p class="text-sm/6 text-red-500 transition-all duration-300">Las contraseñas no coinciden.</p>
+			<p class="text-sm/6 text-red-500 transition-all duration-300">Passwords do not match.</p>
 		}
 	</div>
 
