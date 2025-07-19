@@ -1,5 +1,5 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core'
-import { provideRouter } from '@angular/router'
+import { PreloadAllModules, provideRouter, withPreloading } from '@angular/router'
 
 import { provideHttpClient, withInterceptors } from '@angular/common/http'
 import { provideAnimations } from '@angular/platform-browser/animations'
@@ -14,7 +14,7 @@ export const appConfig: ApplicationConfig = {
 		provideAnimations(),
 		provideBrowserGlobalErrorListeners(),
 		provideZoneChangeDetection({ eventCoalescing: true }),
-		provideRouter(routes),
+		provideRouter(routes, withPreloading(PreloadAllModules)),
 		provideHttpClient(),
 		provideHttpClient(withInterceptors([addTokenInterceptor, launchNotificationInterceptor])),
 		...DI_PROVIDER,

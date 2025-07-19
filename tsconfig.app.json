@@ -11,7 +11,8 @@
 			"@application/*": ["src/app/core/application/*"],
 			"@infrastructure/*": ["src/app/infrastructure/*"],
 			"@shared/*": ["src/app/shared/*"],
-			"@utils/*": ["src/app/utils/*"]
+			"@utils/*": ["src/app/utils/*"],
+			"@envs/*": ["src/environments/*"]
 		}
 	},
 	"include": ["src/**/*.ts"],
