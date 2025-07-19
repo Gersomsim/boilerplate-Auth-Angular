@@ -1,5 +1,6 @@
 import { Component, inject, Input } from '@angular/core'
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms'
+import { Notification } from '@infrastructure/libraries/notification.library'
 import { UiModule } from '@infrastructure/ui/ui.module'
 import { passwordMatchValidator } from '@infrastructure/validators/password-match.validator'
 
@@ -10,6 +11,7 @@ import { passwordMatchValidator } from '@infrastructure/validators/password-matc
 	styleUrl: './reset-password-form.scss',
 })
 export class ResetPasswordForm {
+	notify = inject(Notification)
 	@Input() token!: string
 
 	fb = inject(FormBuilder)
@@ -26,8 +28,8 @@ export class ResetPasswordForm {
 	submit() {
 		if (this.form.invalid) {
 			this.form.markAllAsTouched()
+			this.notify.showError('All fields are required')
 			return
 		}
-		console.log(this.form.value)
 	}
 }

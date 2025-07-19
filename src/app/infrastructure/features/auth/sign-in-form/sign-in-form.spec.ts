@@ -1,23 +1,19 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { SignInForm } from './sign-in-form';
+import { createRoutingFactory, mockProvider, SpectatorRouting } from '@ngneat/spectator/jest'
+import { Notification } from '../../../libraries/notification.library'
+import { SignInForm } from './sign-in-form'
 
 describe('SignInForm', () => {
-  let component: SignInForm;
-  let fixture: ComponentFixture<SignInForm>;
+	let spectator: SpectatorRouting<SignInForm>
+	const createComponent = createRoutingFactory({
+		component: SignInForm,
+		providers: [mockProvider(Notification)],
+	})
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [SignInForm]
-    })
-    .compileComponents();
+	beforeEach(async () => {
+		spectator = createComponent()
+	})
 
-    fixture = TestBed.createComponent(SignInForm);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+	it('should create', () => {
+		expect(spectator.component).toBeTruthy()
+	})
+})

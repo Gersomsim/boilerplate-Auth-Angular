@@ -1,23 +1,15 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { RegisterLink } from './register-link';
+import { createRoutingFactory, SpectatorRouting } from '@ngneat/spectator/jest'
+import { RegisterLink } from './register-link'
 
 describe('RegisterLink', () => {
-  let component: RegisterLink;
-  let fixture: ComponentFixture<RegisterLink>;
+	let spectator: SpectatorRouting<RegisterLink>
+	const createComponent = createRoutingFactory(RegisterLink)
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [RegisterLink]
-    })
-    .compileComponents();
+	beforeEach(async () => {
+		spectator = createComponent()
+	})
 
-    fixture = TestBed.createComponent(RegisterLink);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+	it('should create', () => {
+		expect(spectator.component).toBeTruthy()
+	})
+})

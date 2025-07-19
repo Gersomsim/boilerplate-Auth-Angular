@@ -1,23 +1,19 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { RegisterPage } from './register-page';
+import { createRoutingFactory, mockProvider, SpectatorRouting } from '@ngneat/spectator/jest'
+import { RegisterPage } from './register-page'
+import { ToastrService } from 'ngx-toastr'
 
 describe('RegisterPage', () => {
-  let component: RegisterPage;
-  let fixture: ComponentFixture<RegisterPage>;
+	let spectator: SpectatorRouting<RegisterPage>
+	const createComponent = createRoutingFactory({
+		component: RegisterPage,
+		providers: [mockProvider(ToastrService)],
+	})
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [RegisterPage]
-    })
-    .compileComponents();
+	beforeEach(async () => {
+		spectator = createComponent()
+	})
 
-    fixture = TestBed.createComponent(RegisterPage);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+	it('should create', () => {
+		expect(spectator.component).toBeTruthy()
+	})
+})

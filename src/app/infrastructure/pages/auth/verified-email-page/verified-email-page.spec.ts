@@ -1,23 +1,17 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { VerifiedEmailPage } from './verified-email-page';
+import { createRoutingFactory, SpectatorRouting } from '@ngneat/spectator/jest'
+import { VerifiedEmailPage } from './verified-email-page'
 
 describe('VerifiedEmailPage', () => {
-  let component: VerifiedEmailPage;
-  let fixture: ComponentFixture<VerifiedEmailPage>;
+	let spectator: SpectatorRouting<VerifiedEmailPage>
+	const createComponent = createRoutingFactory({
+		component: VerifiedEmailPage,
+	})
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [VerifiedEmailPage]
-    })
-    .compileComponents();
+	beforeEach(async () => {
+		spectator = createComponent()
+	})
 
-    fixture = TestBed.createComponent(VerifiedEmailPage);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+	it('should create', () => {
+		expect(spectator.component).toBeTruthy()
+	})
+})

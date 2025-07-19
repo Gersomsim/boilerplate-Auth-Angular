@@ -1,23 +1,15 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { AuthPage } from './auth-page';
+import { createRoutingFactory, SpectatorRouting } from '@ngneat/spectator/jest'
+import { AuthPage } from './auth-page'
 
 describe('AuthPage', () => {
-  let component: AuthPage;
-  let fixture: ComponentFixture<AuthPage>;
+	let spectator: SpectatorRouting<AuthPage>
+	const createComponent = createRoutingFactory(AuthPage)
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [AuthPage]
-    })
-    .compileComponents();
+	beforeEach(async () => {
+		spectator = createComponent()
+	})
 
-    fixture = TestBed.createComponent(AuthPage);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+	it('should create', () => {
+		expect(spectator.component).toBeTruthy()
+	})
+})

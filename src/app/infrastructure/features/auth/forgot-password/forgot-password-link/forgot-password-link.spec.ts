@@ -1,23 +1,15 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { ForgotPasswordLink } from './forgot-password-link';
+import { createRoutingFactory, SpectatorRouting } from '@ngneat/spectator/jest'
+import { ForgotPasswordLink } from './forgot-password-link'
 
 describe('ForgotPasswordLink', () => {
-  let component: ForgotPasswordLink;
-  let fixture: ComponentFixture<ForgotPasswordLink>;
+	let spectator: SpectatorRouting<ForgotPasswordLink>
+	const createComponent = createRoutingFactory(ForgotPasswordLink)
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [ForgotPasswordLink]
-    })
-    .compileComponents();
+	beforeEach(async () => {
+		spectator = createComponent()
+	})
 
-    fixture = TestBed.createComponent(ForgotPasswordLink);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+	it('should create', () => {
+		expect(spectator.component).toBeTruthy()
+	})
+})

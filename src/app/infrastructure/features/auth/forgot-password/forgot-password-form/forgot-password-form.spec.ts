@@ -1,23 +1,19 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { ForgotPasswordForm } from './forgot-password-form';
+import { createRoutingFactory, mockProvider, SpectatorRouting } from '@ngneat/spectator/jest'
+import { Notification } from '../../../../libraries/notification.library'
+import { ForgotPasswordForm } from './forgot-password-form'
 
 describe('ForgotPasswordForm', () => {
-  let component: ForgotPasswordForm;
-  let fixture: ComponentFixture<ForgotPasswordForm>;
+	let spectator: SpectatorRouting<ForgotPasswordForm>
+	const createComponent = createRoutingFactory({
+		component: ForgotPasswordForm,
+		providers: [mockProvider(Notification)],
+	})
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [ForgotPasswordForm]
-    })
-    .compileComponents();
+	beforeEach(async () => {
+		spectator = createComponent()
+	})
 
-    fixture = TestBed.createComponent(ForgotPasswordForm);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+	it('should create', () => {
+		expect(spectator.component).toBeTruthy()
+	})
+})

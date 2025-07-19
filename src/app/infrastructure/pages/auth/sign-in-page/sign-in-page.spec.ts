@@ -1,23 +1,19 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { SignInPage } from './sign-in-page';
+import { createRoutingFactory, mockProvider, SpectatorRouting } from '@ngneat/spectator/jest'
+import { ToastrService } from 'ngx-toastr'
+import { SignInPage } from './sign-in-page'
 
 describe('SignInPage', () => {
-  let component: SignInPage;
-  let fixture: ComponentFixture<SignInPage>;
+	let spectator: SpectatorRouting<SignInPage>
+	const createComponent = createRoutingFactory({
+		component: SignInPage,
+		providers: [mockProvider(ToastrService)],
+	})
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [SignInPage]
-    })
-    .compileComponents();
+	beforeEach(async () => {
+		spectator = createComponent()
+	})
 
-    fixture = TestBed.createComponent(SignInPage);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+	it('should create', () => {
+		expect(spectator.component).toBeTruthy()
+	})
+})
