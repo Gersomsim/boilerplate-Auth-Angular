@@ -1,1 +1,79 @@
-<p>verified-email works!</p>
+<div class="min-h-screen flex items-center justify-center px-4 py-8">
+	<!-- Estado de carga -->
+	<div
+		*ngIf="verificationState === 'loading'"
+		class="bg-white rounded-lg shadow-lg p-8 max-w-md w-full text-center"
+	>
+		<div class="flex justify-center mb-6">
+			<div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+		</div>
+		<h2 class="text-xl font-semibold text-gray-900 mb-3">Verificando tu email...</h2>
+		<p class="text-gray-600 mb-6">We are processing your verification. Please wait a moment.</p>
+	</div>
+
+	<!-- Estado de éxito -->
+	<div
+		*ngIf="verificationState === 'success'"
+		class="bg-white rounded-lg shadow-lg p-8 max-w-md w-full text-center"
+	>
+		<div class="flex justify-center mb-6">
+			<div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
+				<svg
+					class="w-8 h-8 text-green-600"
+					fill="none"
+					stroke="currentColor"
+					viewBox="0 0 24 24"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="M5 13l4 4L19 7"
+					></path>
+				</svg>
+			</div>
+		</div>
+		<h2 class="text-xl font-semibold text-gray-900 mb-3">Email verified successfully!</h2>
+		<p class="text-gray-600 mb-6">Your account has been verified. You can now access your account.</p>
+		<app-ui-button
+			(click)="redirectToSignIn()"
+			type="button"
+		>
+			Go to sign in
+		</app-ui-button>
+	</div>
+
+	<!-- Estado de error -->
+	<div
+		*ngIf="verificationState === 'error'"
+		class="bg-white rounded-lg shadow-lg p-8 max-w-md w-full text-center"
+	>
+		<div class="flex justify-center mb-6">
+			<div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center">
+				<svg
+					class="w-8 h-8 text-red-600"
+					fill="none"
+					stroke="currentColor"
+					viewBox="0 0 24 24"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="M6 18L18 6M6 6l12 12"
+					></path>
+				</svg>
+			</div>
+		</div>
+		<h2 class="text-xl font-semibold text-gray-900 mb-3">Error in verification</h2>
+		<p class="text-gray-600 mb-6">{{ errorMessage }}</p>
+		<div class="space-y-3">
+			<app-ui-button
+				(click)="redirectToSignIn()"
+				type="button"
+			>
+				Go to sign in
+			</app-ui-button>
+		</div>
+	</div>
+</div>

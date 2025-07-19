@@ -9,6 +9,10 @@ Principios clave
 - Usa mayúsculas y minúsculas para los nombres de archivo (p. ej., `user-profile.component.ts`).
 - Prefiere exportaciones con nombre para componentes, servicios y utilidades.
 
+Styles
+
+- usa Tailwind para generar interfaces
+
 GIT
 
 - todos los commits generados no deben tener mas de 49 caracteres y deben ser realizados con conventional commits ej. (✨Feat: modelo de usuario)

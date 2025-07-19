@@ -23,14 +23,14 @@ export const authRoutes: Routes = [
 				loadComponent: () => import('./reset-password-page/reset-password-page').then(m => m.ResetPasswordPage),
 			},
 			{
-				path: 'verify-email',
-				loadComponent: () => import('./verified-email-page/verified-email-page').then(m => m.VerifiedEmailPage),
-			},
-			{
 				path: '',
 				redirectTo: 'sign-in',
 				pathMatch: 'full',
 			},
 		],
+	},
+	{
+		path: 'verify-email',
+		loadComponent: () => import('./verified-email-page/verified-email-page').then(m => m.VerifiedEmailPage),
 	},
 ]
