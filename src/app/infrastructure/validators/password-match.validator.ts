@@ -23,7 +23,8 @@ export function passwordMatchValidator(passwordControlName: string, confirmPassw
 			return { passwordMismatch: true }
 		} else {
 			if (confirmPasswordControl.errors && confirmPasswordControl.errors['passwordMismatch']) {
-				const { passwordMismatch, ...restErrors } = confirmPasswordControl.errors
+				const restErrors = { ...confirmPasswordControl.errors }
+				delete restErrors['passwordMismatch']
 				confirmPasswordControl.setErrors(Object.keys(restErrors).length > 0 ? restErrors : null)
 			}
 		}
