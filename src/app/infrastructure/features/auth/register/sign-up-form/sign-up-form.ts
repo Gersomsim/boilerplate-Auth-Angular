@@ -37,6 +37,7 @@ export class SignUpForm {
 
 		this.isSubmitting.set(true)
 		await this.authFacade.signUp(this.form.getRawValue())
+		this.form.reset()
 		this.isSubmitting.set(false)
 	}
 }
