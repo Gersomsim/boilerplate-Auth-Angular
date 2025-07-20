@@ -1,16 +1,19 @@
 @if (control?.touched) {
-	<p class="text-sm/6 text-red-500">
+	<p
+		class="text-sm/6 text-red-500"
+		data-testid="field-errors"
+	>
 		@if (getErrorMessage('required')) {
-			<span>{{ getErrorMessage('required') }}</span>
+			<span data-testid="field-errors-required">{{ getErrorMessage('required') }}</span>
 		}
 		@if (getErrorMessage('email')) {
-			<span>{{ getErrorMessage('email') }}</span>
+			<span data-testid="field-errors-email">{{ getErrorMessage('email') }}</span>
 		}
 		@if (getErrorMessage('minlength')) {
-			<span>{{ getErrorMessage('minlength') }}</span>
+			<span data-testid="field-errors-minlength">{{ getErrorMessage('minlength') }}</span>
 		}
 		@if (getErrorMessage('maxlength')) {
-			<span>{{ getErrorMessage('maxlength') }}</span>
+			<span data-testid="field-errors-maxlength">{{ getErrorMessage('maxlength') }}</span>
 		}
 	</p>
 }
