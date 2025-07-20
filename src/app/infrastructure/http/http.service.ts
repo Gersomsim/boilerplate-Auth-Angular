@@ -1,6 +1,7 @@
 import { HttpClient, HttpContext, HttpHeaders } from '@angular/common/http'
 import { inject, Injectable } from '@angular/core'
 import { Router } from '@angular/router'
+import { environment } from '@envs/environment'
 import { ErrorHandler } from '@utils/error-handler'
 import { generateQueryParams } from '@utils/generate-query-params'
 import { catchError, Observable } from 'rxjs'
@@ -10,7 +11,7 @@ import { catchError, Observable } from 'rxjs'
 })
 export class HttpService extends ErrorHandler {
 	private readonly http = inject(HttpClient)
-	baseUrl = ''
+	baseUrl = environment.apiUrl + '/v1'
 	constructor() {
 		super(inject(Router))
 	}
