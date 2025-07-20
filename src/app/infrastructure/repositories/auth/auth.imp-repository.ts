@@ -36,6 +36,7 @@ export class AuthImpRepository implements AuthRepository {
 	}
 
 	verifyToken(token: string): Promise<void> {
+		console.log('verifyToken', token)
 		return this.authAdapter.verifyToken(token)
 	}
 }

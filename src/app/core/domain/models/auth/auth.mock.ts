@@ -4,7 +4,7 @@ import { mockUser } from './user.mock'
 
 export const mockAuth = (auth?: Partial<Auth>): Auth => {
 	return {
-		token: faker.string.uuid(),
+		accessToken: faker.string.uuid(),
 		refreshToken: faker.string.uuid(),
 		user: mockUser(auth?.user),
 		...auth,

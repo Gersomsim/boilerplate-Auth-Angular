@@ -10,6 +10,7 @@ import {
 	VerifyTokenUseCase,
 } from '@application/use-cases'
 import { Auth } from '@domain/models'
+import { CookiesLibrary } from '@infrastructure/libraries/cookies.library'
 
 @Injectable({
 	providedIn: 'root',
@@ -26,7 +27,10 @@ export class AuthFacade {
 
 	async signIn(form: { email: string; password: string }): Promise<Auth> {
 		const { email, password } = form
-		return this.loginUC.execute(email, password)
+		const auth = await this.loginUC.execute(email, password)
+		CookiesLibrary.set('access_token', auth.accessToken)
+		CookiesLibrary.set('refresh_token', auth.refreshToken)
+		return auth
 	}
 
 	async signUp(payload: { email: string; password: string; name: string }): Promise<Auth> {
