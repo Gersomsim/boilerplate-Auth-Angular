@@ -1,21 +1,21 @@
-import { Component, inject, OnInit } from '@angular/core'
+import { Component, inject, signal } from '@angular/core'
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms'
 import { Notification } from '@infrastructure/libraries/notification.library'
+import { AuthFacade } from '@infrastructure/states/facades/auth/auth.facade'
 import { UiModule } from '@infrastructure/ui/ui.module'
 import { passwordMatchValidator } from '@infrastructure/validators/password-match.validator'
-import { debounceTime } from 'rxjs'
 import { ForgotPasswordLink } from '../../forgot-password/forgot-password-link/forgot-password-link'
 
 @Component({
 	selector: 'app-sign-up-form',
 	imports: [UiModule, ReactiveFormsModule, ForgotPasswordLink],
 	templateUrl: './sign-up-form.html',
-	styleUrl: './sign-up-form.scss',
 })
-export class SignUpForm implements OnInit {
+export class SignUpForm {
+	authFacade = inject(AuthFacade)
 	fb = inject(FormBuilder)
 	notify = inject(Notification)
-	form = this.fb.group(
+	form = this.fb.nonNullable.group(
 		{
 			email: ['', [Validators.required, Validators.email]],
 			name: ['', [Validators.required]],
@@ -26,25 +26,17 @@ export class SignUpForm implements OnInit {
 			validators: [passwordMatchValidator('password', 'confirmPassword')],
 		},
 	)
+	isSubmitting = signal(false)
 
-	ngOnInit() {
-		this.form
-			.get('confirmPassword')
-			?.valueChanges.pipe(debounceTime(600))
-			.subscribe(value => {
-				if (value !== this.form.get('password')?.value) {
-					this.form.get('confirmPassword')?.setErrors({ mismatch: true })
-					this.form.get('confirmPassword')?.updateValueAndValidity()
-				}
-			})
-	}
-
-	submit() {
+	async submit() {
 		if (this.form.invalid) {
 			this.form.markAllAsTouched()
 			this.notify.showWarning('Please fill in all fields')
 			return
 		}
-		console.log(this.form.value)
+
+		this.isSubmitting.set(true)
+		await this.authFacade.signUp(this.form.getRawValue())
+		this.isSubmitting.set(false)
 	}
 }
