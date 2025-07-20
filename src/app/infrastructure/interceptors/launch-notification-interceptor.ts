@@ -24,31 +24,33 @@ const handleSuccessResponse = (
 	notification: Notification,
 ): void => {
 	const method = request.method
-	const url = request.url
+	let mainMessage = 'Operación completada exitosamente'
 
 	if (response.body.message) {
-		notification.showSuccess(response.body.message)
-		return
+		mainMessage = response.body.message
 	}
-
 	// Puedes personalizar los mensajes según el método HTTP
 	switch (method) {
 		case 'POST':
-			notification.showSuccess('Elemento creado exitosamente', 'Creación exitosa')
+			mainMessage = mainMessage || 'Created successfully'
+			notification.showSuccess(mainMessage)
 			return
 		case 'PUT':
 		case 'PATCH':
-			notification.showSuccess('Elemento actualizado exitosamente', 'Actualización exitosa')
+			mainMessage = mainMessage || 'Updated successfully'
+			notification.showSuccess(mainMessage)
 			return
 		case 'DELETE':
-			notification.showSuccess('Elemento eliminado exitosamente', 'Eliminación exitosa')
+			mainMessage = mainMessage || 'Deleted successfully'
+			notification.showSuccess(mainMessage)
 			return
 		case 'GET':
 			// Opcional: puedes mostrar notificaciones para GET o no
 			// Notification.showInfo('Datos cargados exitosamente', 'Carga exitosa');
 			return
 		default:
-			notification.showSuccess('Operación completada exitosamente')
+			mainMessage = mainMessage || 'Operation completed successfully'
+			notification.showSuccess(mainMessage)
 			return
 	}
 

@@ -2,6 +2,7 @@ import { HttpContext, HttpHeaders } from '@angular/common/http'
 import { inject, Injectable } from '@angular/core'
 import { Auth, User } from '@domain/models'
 import { HttpService } from '@infrastructure/http/http.service'
+import { checkToken } from '@infrastructure/interceptors'
 import { lastValueFrom } from 'rxjs'
 
 @Injectable({
@@ -42,7 +43,8 @@ export class AuthAdapter {
 	}
 
 	requestVerificationEmail(): Promise<void> {
-		const response = this.http.post<void>(`${this.path}/resend-verification-email`, {})
+		const context = checkToken()
+		const response = this.http.post<void>(`${this.path}/resend-verification-email`, {}, context)
 		return lastValueFrom(response)
 	}
 

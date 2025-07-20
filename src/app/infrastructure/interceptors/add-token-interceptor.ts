@@ -1,4 +1,8 @@
 import { HttpContext, HttpContextToken, HttpHandlerFn, HttpInterceptorFn, HttpRequest } from '@angular/common/http'
+import { inject } from '@angular/core'
+import { AuthAdapter } from '@infrastructure/adapters/auth/auth.adapter'
+import { CookiesLibrary } from '@infrastructure/libraries/cookies.library'
+import { JwtLibrary } from '@infrastructure/libraries/jwt.library'
 
 const CHECK_TOKEN = new HttpContextToken<boolean>(() => false)
 
@@ -8,13 +12,20 @@ export function checkToken() {
 
 export const addTokenInterceptor: HttpInterceptorFn = (req, next) => {
 	if (req.context.get(CHECK_TOKEN)) {
-		return addToken(req, next)
+		const token = CookiesLibrary.get('access_token')
+		if (token) {
+			if (JwtLibrary.isExpired(token)) {
+				refreshToken(req, next)
+			} else {
+				return addToken(req, next)
+			}
+		}
 	}
 	return next(req)
 }
 
 function addToken(req: HttpRequest<any>, next: HttpHandlerFn) {
-	const token = localStorage.getItem('token')
+	const token = CookiesLibrary.get('access_token')
 	if (token) {
 		const newReq = req.clone({
 			setHeaders: {
@@ -22,6 +33,18 @@ function addToken(req: HttpRequest<any>, next: HttpHandlerFn) {
 			},
 		})
 		return next(newReq)
+	}
+	return next(req)
+}
+
+async function refreshToken(req: HttpRequest<any>, next: HttpHandlerFn) {
+	const token = CookiesLibrary.get('refresh_token')
+	const adapter = inject(AuthAdapter)
+	if (token && !JwtLibrary.isExpired(token)) {
+		const auth = await adapter.refreshToken(token)
+		CookiesLibrary.set('access_token', auth.accessToken)
+		CookiesLibrary.set('refresh_token', auth.refreshToken)
+		return addToken(req, next)
 	}
 	return next(req)
 }
