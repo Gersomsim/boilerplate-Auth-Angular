@@ -37,8 +37,8 @@ export class AuthFacade {
 		return this.forgotPasswordUC.execute(email)
 	}
 
-	async resetPassword(payload: { password: string }, token: string): Promise<void> {
-		return this.resetPasswordUC.execute(token, payload.password)
+	async resetPassword(password: string, token: string): Promise<void> {
+		return this.resetPasswordUC.execute(token, password)
 	}
 
 	async verifyEmail(token: string): Promise<void> {

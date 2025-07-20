@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common'
-import { Component, OnInit, inject } from '@angular/core'
+import { Component, Input, OnInit, inject } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
+import { AuthFacade } from '@infrastructure/states/facades/auth/auth.facade'
 import { UiModule } from '@infrastructure/ui/ui.module'
 
 type VerificationState = 'loading' | 'success' | 'error'
@@ -11,8 +12,10 @@ type VerificationState = 'loading' | 'success' | 'error'
 	templateUrl: './verified-email.html',
 })
 export class VerifiedEmail implements OnInit {
+	authFacade = inject(AuthFacade)
 	private readonly route = inject(ActivatedRoute)
 	private readonly router = inject(Router)
+	@Input({ required: true }) token!: string
 
 	verificationState: VerificationState = 'loading'
 	errorMessage = ''
@@ -21,20 +24,14 @@ export class VerifiedEmail implements OnInit {
 		this.verifyEmail()
 	}
 
-	private verifyEmail(): void {
-		// Simular el proceso de verificación
-		setTimeout(() => {
-			// Aquí iría la lógica real de verificación
-			// Por ahora simulamos diferentes resultados
-			const random = Math.random()
-
-			if (random > 0.7) {
-				this.verificationState = 'success'
-			} else {
-				this.verificationState = 'error'
-				this.errorMessage = 'El enlace de verificación ha expirado o es inválido.'
-			}
-		}, 2000)
+	private async verifyEmail(): Promise<void> {
+		try {
+			await this.authFacade.verifyEmail(this.token)
+			this.verificationState = 'success'
+		} catch (error) {
+			this.verificationState = 'error'
+			this.errorMessage = 'The verification link has expired or is invalid.'
+		}
 	}
 
 	redirectToSignIn(): void {
