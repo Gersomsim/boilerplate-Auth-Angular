@@ -1,6 +1,8 @@
-import { Component, inject } from '@angular/core'
+import { Component, inject, signal } from '@angular/core'
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms'
+import { Router } from '@angular/router'
 import { Notification } from '@infrastructure/libraries/notification.library'
+import { AuthFacade } from '@infrastructure/states/facades/auth/auth.facade'
 import { UiModule } from '@infrastructure/ui/ui.module'
 
 @Component({
@@ -10,19 +12,33 @@ import { UiModule } from '@infrastructure/ui/ui.module'
 	styleUrl: './forgot-password-form.scss',
 })
 export class ForgotPasswordForm {
+	authFacade = inject(AuthFacade)
+	router = inject(Router)
 	fb = inject(FormBuilder)
 	notify = inject(Notification)
-	form = this.fb.group({
+	isSubmitting = signal(false)
+	form = this.fb.nonNullable.group({
 		email: ['', [Validators.required, Validators.email]],
 	})
 
-	submit() {
+	async submit() {
 		if (this.form.invalid) {
 			this.form.markAllAsTouched()
 			this.notify.showWarning('Please fill in all fields')
 			return
 		}
-
-		console.log(this.form.value)
+		try {
+			this.isSubmitting.set(true)
+			const email = this.form.getRawValue().email
+			await this.authFacade.forgotPassword(email)
+			this.form.reset()
+			this.isSubmitting.set(false)
+			this.navigateToSignIn()
+		} catch (error) {
+			this.isSubmitting.set(false)
+		}
+	}
+	navigateToSignIn() {
+		this.router.navigate(['/'])
 	}
 }
