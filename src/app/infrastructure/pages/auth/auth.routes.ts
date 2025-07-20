@@ -30,7 +30,7 @@ export const authRoutes: Routes = [
 		],
 	},
 	{
-		path: 'verify-email',
+		path: 'confirm-email',
 		loadComponent: () => import('./verified-email-page/verified-email-page').then(m => m.VerifiedEmailPage),
 	},
 ]
