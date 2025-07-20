@@ -1,26 +1,21 @@
 import { inject } from '@angular/core'
 import { CanActivateFn, Router } from '@angular/router'
 import { VerifyTokenUseCase } from '@application/use-cases'
-import { CookiesLibrary } from '../libraries/cookies.library'
+import { CookiesLibrary } from '@infrastructure/libraries/cookies.library'
 
-export const authGuard: CanActivateFn = async (route, state) => {
+export const isLoggedGuard: CanActivateFn = async (route, state) => {
 	const router = inject(Router)
 	const verifyToken = inject(VerifyTokenUseCase)
-
 	const token = CookiesLibrary.get('access_token')
 	if (token) {
 		try {
 			await verifyToken.execute(token)
-			return true
+			router.navigate(['/app'])
+			return false
 		} catch (error) {
 			CookiesLibrary.remove('access_token')
+			return true
 		}
 	}
-	const path = route.url[0].path
-	if (path === 'app') {
-		router.navigate(['/'])
-	} else {
-		router.navigate(['/'], { queryParams: { redirect: state.url } })
-	}
-	return false
+	return true
 }
