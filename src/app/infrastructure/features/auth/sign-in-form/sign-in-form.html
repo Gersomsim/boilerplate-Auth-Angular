@@ -46,6 +46,11 @@
 	</div>
 
 	<div>
-		<app-ui-button type="submit">Sign in</app-ui-button>
+		<app-ui-button
+			type="submit"
+			[disabled]="isSubmitting()"
+		>
+			Sign in
+		</app-ui-button>
 	</div>
 </form>
