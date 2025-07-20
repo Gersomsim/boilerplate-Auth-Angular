@@ -4,8 +4,8 @@ export default {
 	moduleNameMapper: {
 		'^@utils/(.*)$': '<rootDir>/src/app/utils/$1',
 		'^@infrastructure/(.*)$': '<rootDir>/src/app/infrastructure/$1',
-		'^@application/(.*)$': '<rootDir>/src/app/application/$1',
-		'^@domain/(.*)$': '<rootDir>/src/app/domain/$1',
+		'^@application/(.*)$': '<rootDir>/src/app/core/application/$1',
+		'^@domain/(.*)$': '<rootDir>/src/app/core/domain/$1',
 		'^@shared/(.*)$': '<rootDir>/src/app/shared/$1',
 		'^@envs/(.*)$': '<rootDir>/src/environments/$1',
 	},
